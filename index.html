@@ -253,18 +253,47 @@ function addMessage(text, type) {
   box.scrollTop = box.scrollHeight;
 }
 
-function sendMessage() {
+async function sendMessage() {
   const input = document.getElementById("question");
   const text = input.value.trim();
 
   if (!text) return;
 
   addMessage("You: " + text, "user");
+  input.value = "";
 
-  addMessage(
-    "Your question has been received! Real AI connection is coming soon.",
-    "bot"
-  );
+  addMessage("AI सोच रहा है... ⏳", "bot");
+
+  try {
+    const response = await fetch(
+      "https://next-si-ai.kamleshsaini941320.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: text
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "AI service error");
+    }
+
+    addMessage("Next SI AI: " + data.answer, "bot");
+
+  } catch (error) {
+    addMessage(
+      "माफ़ कीजिए! AI से कनेक्शन नहीं हो पाया। दोबारा कोशिश करें।",
+      "bot"
+    );
+    console.error(error);
+  }
+}
 
   input.value = "";
 }
