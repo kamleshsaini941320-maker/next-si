@@ -340,7 +340,7 @@ function displayChat(chat) {
 
 function loadChatHistory() {
   if (chats.length === 0) {
-    const chat = createChat();
+    createChat();
 
     addMessage(
       "Hello! 👋 Welcome to Next SI AI. Ask me anything!",
@@ -353,7 +353,6 @@ function loadChatHistory() {
   activeChatId = chats[0].id;
   displayChat(chats[0]);
 }
-
 async function sendMessage() {
   const input = document.getElementById("question");
   const text = input.value.trim();
