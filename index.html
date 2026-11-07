@@ -288,11 +288,11 @@ async function sendMessage() {
 
   } catch (error) {
     addMessage(
-      "माफ़ कीजिए! AI से कनेक्शन नहीं हो पाया। दोबारा कोशिश करें।",
+      "Connection Error: " + error.message,
       "bot"
     );
-    console.error(error);
-  }
+    console.error("Next SI Error:", error);
+}
 }
 
 function quickAsk(text) {
