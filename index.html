@@ -1,103 +1,124 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Next SI - AI Technology</title>
+<title>Next SI AI</title>
+
 <style>
-* {box-sizing:border-box}
 body {
   margin:0;
-  font-family:Arial,sans-serif;
+  font-family:Arial;
   background:#0b1224;
   color:white;
 }
 header {
-  padding:22px;
   background:#111d35;
+  padding:20px;
   text-align:center;
 }
-header h1 {color:#51c7ff}
-.hero {
-  text-align:center;
-  padding:65px 20px;
+h1 {color:#51c7ff}
+.container {
+  max-width:700px;
+  margin:40px auto;
+  padding:20px;
 }
-.hero h2 {font-size:36px}
-.hero p {color:#b9c5d8}
-.btn {
-  display:inline-block;
-  padding:12px 22px;
+.chatbox {
+  background:#172642;
+  padding:20px;
+  border-radius:12px;
+}
+#messages {
+  height:300px;
+  overflow-y:auto;
+  padding:10px;
+}
+input {
+  width:70%;
+  padding:13px;
+  border-radius:7px;
+  border:0;
+}
+button {
+  padding:13px;
   background:#168bd1;
   color:white;
-  text-decoration:none;
-  border-radius:8px;
+  border:0;
+  border-radius:7px;
+  cursor:pointer;
 }
-section {padding:25px 18px}
-.tools {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:15px;
-}
-.card {
-  background:#172642;
-  padding:22px;
-  border-radius:12px;
-  text-align:center;
-}
-.card p {color:#bdc9da}
 footer {
   text-align:center;
-  padding:25px;
-  color:#aab7ca;
+  padding:20px;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-  <h1>Next SI</h1>
-  <p>Future of Artificial Intelligence</p>
+<h1>Next SI</h1>
+<p>Your AI Technology Platform</p>
 </header>
 
-<div class="hero">
-  <h2>Welcome to Next SI</h2>
-  <p>Discover AI Tools, Smart Technology
-  and Automation Services.</p>
-  <a href="#tools" class="btn">Explore Tools</a>
+<div class="container">
+<div class="chatbox">
+
+<h2>🤖 Next SI AI</h2>
+<p>Ask anything!</p>
+
+<div id="messages">
+<p>🤖 Hello! Welcome to Next SI AI.</p>
 </div>
 
-<section id="tools">
-  <h2>Our AI Tools</h2>
-  <div class="tools">
-    <div class="card">
-      <h3>AI Assistant</h3>
-      <p>Smart AI assistance.</p>
-    </div>
-    <div class="card">
-      <h3>PDF Tools</h3>
-      <p>Online PDF utilities.</p>
-    </div>
-    <div class="card">
-      <h3>Image Tools</h3>
-      <p>Image editing utilities.</p>
-    </div>
-    <div class="card">
-      <h3>AI Agents</h3>
-      <p>Business automation services.</p>
-    </div>
-  </div>
-</section>
+<input id="question"
+placeholder="Type your question...">
 
-<section>
-  <h2>Our Services</h2>
-  <p>Explore AI automation and technology
-  solutions with Next SI.</p>
-</section>
+<button onclick="sendMessage()">Send</button>
+<button onclick="clearChat()">Clear</button>
+
+</div>
+</div>
 
 <footer>
-  © 2026 Next SI | All Rights Reserved
+© 2026 Next SI
 </footer>
+
+<script>
+function sendMessage() {
+ let input = document.getElementById("question");
+ let message = input.value.trim();
+
+ if(message === "") return;
+
+ let box = document.getElementById("messages");
+
+ box.innerHTML +=
+ "<p>👤 You: " + escapeHTML(message) + "</p>";
+
+ box.innerHTML +=
+ "<p>🤖 Next SI AI: आपका सवाल मिल गया है। वास्तविक AI जवाब देने की सुविधा जल्द जोड़ी जाएगी।</p>";
+
+ input.value = "";
+ box.scrollTop = box.scrollHeight;
+}
+
+function clearChat() {
+ document.getElementById("messages").innerHTML = "";
+}
+
+function escapeHTML(text) {
+ return text.replace(/[&<>"']/g, function(c) {
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[c];
+ });
+}
+</script>
 
 </body>
 </html>
