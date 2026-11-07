@@ -243,6 +243,72 @@ footer {
 </footer>
 
 <script>
+const STORAGE_KEY = "nextSIAllChats";
+
+let chats = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+let activeChatId = null;
+
+// पुराने Chat History को सुरक्षित रखना
+const oldHistory = localStorage.getItem("nextSIChatHistory");
+
+if (chats.length === 0 && oldHistory) {
+  try {
+    chats.push({
+      id: Date.now(),
+      title: "Old Chat",
+      date: new Date().toISOString(),
+      messages: JSON.parse(oldHistory)
+    });
+  } catch (e) {
+    console.log("Old history could not be loaded");
+  }
+}
+
+function saveAllChats() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
+}
+
+function createChat() {
+  const chat = {
+    id: Date.now(),
+    title: "New Chat",
+    date: new Date().toISOString(),
+    messages: []
+  };
+
+  chats.unshift(chat);
+  activeChatId = chat.id;
+
+  saveAllChats();
+  return chat;
+}
+
+function getActiveChat() {
+  return chats.find(chat => chat.id === activeChatId);
+}
+
+function saveChatHistory() {
+  const chat = getActiveChat();
+  if (!chat) return;
+
+  const box = document.getElementById("messages");
+
+  chat.messages = Array.from(box.children).map(msg => ({
+    text: msg.textContent,
+    type: msg.className.replace("message ", "")
+  }));
+
+  const firstUser = chat.messages.find(m => m.type === "user");
+
+  if (firstUser && chat.title === "New Chat") {
+    chat.title = firstUser.text.replace("You: ", "").slice(0, 30);
+  }
+
+  chat.date = new Date().toISOString();
+
+  saveAllChats();
+}
+
 function addMessage(text, type) {
   const box = document.getElementById("messages");
   const msg = document.createElement("div");
@@ -256,35 +322,36 @@ function addMessage(text, type) {
   saveChatHistory();
 }
 
-function saveChatHistory() {
-  const box = document.getElementById("messages");
-
-  const messages = Array.from(box.children).map(msg => ({
-    text: msg.textContent,
-    type: msg.className.replace("message ", "")
-  }));
-
-  localStorage.setItem("nextSIChatHistory", JSON.stringify(messages));
-}
-
-function loadChatHistory() {
-  const saved = localStorage.getItem("nextSIChatHistory");
-
-  if (!saved) return;
-
-  const messages = JSON.parse(saved);
-
+function displayChat(chat) {
   const box = document.getElementById("messages");
   box.innerHTML = "";
 
-  messages.forEach(msg => {
+  chat.messages.forEach(msg => {
     const element = document.createElement("div");
+
     element.className = "message " + msg.type;
     element.textContent = msg.text;
+
     box.appendChild(element);
   });
 
   box.scrollTop = box.scrollHeight;
+}
+
+function loadChatHistory() {
+  if (chats.length === 0) {
+    const chat = createChat();
+
+    addMessage(
+      "Hello! 👋 Welcome to Next SI AI. Ask me anything!",
+      "bot"
+    );
+
+    return;
+  }
+
+  activeChatId = chats[0].id;
+  displayChat(chats[0]);
 }
 
 async function sendMessage() {
@@ -293,10 +360,16 @@ async function sendMessage() {
 
   if (!text) return;
 
+  if (!getActiveChat()) createChat();
+
   addMessage("You: " + text, "user");
   input.value = "";
 
-  addMessage("AI सोच रहा है... ⏳", "bot");
+  const thinking = document.createElement("div");
+  thinking.className = "message bot";
+  thinking.textContent = "AI सोच रहा है... ⏳";
+
+  document.getElementById("messages").appendChild(thinking);
 
   try {
     const response = await fetch(
@@ -306,28 +379,30 @@ async function sendMessage() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          message: text
-        })
+        body: JSON.stringify({ message: text })
       }
     );
 
     const data = await response.json();
 
-   if (!response.ok) {
-  throw new Error(
-    JSON.stringify(data.details || data)
-  );
-}
- addMessage("Next SI AI: " + data.answer, "bot");
+    if (!response.ok) {
+      throw new Error(JSON.stringify(data.details || data));
+    }
+
+    thinking.remove();
+
+    addMessage("Next SI AI: " + data.answer, "bot");
 
   } catch (error) {
+    thinking.remove();
+
     addMessage(
       "Connection Error: " + error.message,
       "bot"
     );
+
     console.error("Next SI Error:", error);
-}
+  }
 }
 
 function quickAsk(text) {
@@ -336,8 +411,9 @@ function quickAsk(text) {
 }
 
 function newChat() {
-  document.getElementById("messages").innerHTML = "";
-  localStorage.removeItem("nextSIChatHistory");
+  const chat = createChat();
+
+  displayChat(chat);
 
   addMessage(
     "Hello! 👋 Welcome to Next SI AI. Ask me anything!",
@@ -345,19 +421,75 @@ function newChat() {
   );
 }
 
-function showHistory() {
-  const saved = localStorage.getItem("nextSIChatHistory");
+function openChat(id) {
+  const chat = chats.find(c => c.id === id);
 
-  if (!saved) {
-    alert("No chat history found!");
+  if (!chat) return;
+
+  activeChatId = id;
+  displayChat(chat);
+}
+
+function deleteChat(id) {
+  if (!confirm("क्या आप यह Chat Delete करना चाहते हैं?")) return;
+
+  chats = chats.filter(chat => chat.id !== id);
+
+  if (activeChatId === id) {
+    if (chats.length > 0) {
+      activeChatId = chats[0].id;
+      displayChat(chats[0]);
+    } else {
+      const chat = createChat();
+      displayChat(chat);
+    }
+  }
+
+  saveAllChats();
+  showHistory();
+}
+
+function showHistory() {
+  const box = document.getElementById("messages");
+  box.innerHTML = "";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "💬 Chat History";
+  box.appendChild(heading);
+
+  if (chats.length === 0) {
+    box.append("No chat history found.");
     return;
   }
 
-  alert("Your chat history is saved on this device!");
+  chats.forEach(chat => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const title = document.createElement("h3");
+    title.textContent = chat.title;
+
+    const date = document.createElement("p");
+    date.textContent = new Date(chat.date).toLocaleString();
+
+    const openButton = document.createElement("button");
+    openButton.textContent = "Open Chat";
+    openButton.onclick = () => openChat(chat.id);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete 🗑️";
+    deleteButton.onclick = () => deleteChat(chat.id);
+
+    item.appendChild(title);
+    item.appendChild(date);
+    item.appendChild(openButton);
+    item.appendChild(deleteButton);
+
+    box.appendChild(item);
+  });
 }
 
 window.addEventListener("DOMContentLoaded", loadChatHistory);
 </script>
-
 </body>
 </html>
