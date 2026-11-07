@@ -252,6 +252,39 @@ function addMessage(text, type) {
 
   box.appendChild(msg);
   box.scrollTop = box.scrollHeight;
+
+  saveChatHistory();
+}
+
+function saveChatHistory() {
+  const box = document.getElementById("messages");
+
+  const messages = Array.from(box.children).map(msg => ({
+    text: msg.textContent,
+    type: msg.className.replace("message ", "")
+  }));
+
+  localStorage.setItem("nextSIChatHistory", JSON.stringify(messages));
+}
+
+function loadChatHistory() {
+  const saved = localStorage.getItem("nextSIChatHistory");
+
+  if (!saved) return;
+
+  const messages = JSON.parse(saved);
+
+  const box = document.getElementById("messages");
+  box.innerHTML = "";
+
+  messages.forEach(msg => {
+    const element = document.createElement("div");
+    element.className = "message " + msg.type;
+    element.textContent = msg.text;
+    box.appendChild(element);
+  });
+
+  box.scrollTop = box.scrollHeight;
 }
 
 async function sendMessage() {
@@ -304,15 +337,26 @@ function quickAsk(text) {
 
 function newChat() {
   document.getElementById("messages").innerHTML = "";
+  localStorage.removeItem("nextSIChatHistory");
+
   addMessage(
     "Hello! 👋 Welcome to Next SI AI. Ask me anything!",
     "bot"
   );
 }
-  
+
 function showHistory() {
-  alert("Chat history feature is coming soon!");
+  const saved = localStorage.getItem("nextSIChatHistory");
+
+  if (!saved) {
+    alert("No chat history found!");
+    return;
+  }
+
+  alert("Your chat history is saved on this device!");
 }
+
+window.addEventListener("DOMContentLoaded", loadChatHistory);
 </script>
 
 </body>
