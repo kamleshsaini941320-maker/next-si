@@ -220,11 +220,12 @@ footer {
 <div class="input-area">
   <input
     id="question"
+    type="text"
     placeholder="Type your question here..."
-    onkeydown="if(event.key==='Enter') sendMessage()"
+    onkeydown="if(event.key === 'Enter') sendMessage()"
   >
 
-  <button class="action" onclick="sendMessage()">
+  <button class="action" type="button" onclick="sendMessage()">
     Send ➤
   </button>
 </div>
