@@ -297,7 +297,7 @@ function saveChatHistory() {
     text: msg.textContent,
     type: msg.className.replace("message ", "")
   }));
-
+  
   const firstUser = chat.messages.find(m => m.type === "user");
 
   if (firstUser && chat.title === "New Chat") {
@@ -483,33 +483,6 @@ function showHistory() {
     item.appendChild(date);
     item.appendChild(openBtn);
     item.appendChild(deleteBtn);
-
-    box.appendChild(item);
-  });
-}
-
-  chats.forEach(chat => {
-    const item = document.createElement("div");
-    item.className = "history-item";
-
-    const title = document.createElement("h3");
-    title.textContent = chat.title;
-
-    const date = document.createElement("p");
-    date.textContent = new Date(chat.date).toLocaleString();
-
-    const openButton = document.createElement("button");
-    openButton.textContent = "Open Chat";
-    openButton.onclick = () => openChat(chat.id);
-
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete 🗑️";
-    deleteButton.onclick = () => deleteChat(chat.id);
-
-    item.appendChild(title);
-    item.appendChild(date);
-    item.appendChild(openButton);
-    item.appendChild(deleteButton);
 
     box.appendChild(item);
   });
