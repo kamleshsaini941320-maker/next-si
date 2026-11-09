@@ -458,6 +458,10 @@ body.light-mode footer {
     onkeydown="if(event.key === 'Enter') sendMessage()"
   >
 
+  <button class="action" type="button" onclick="startVoiceInput()" id="voiceBtn">
+    🎤
+  </button>
+
   <button class="action" type="button" onclick="sendMessage()">
     Send ➤
   </button>
@@ -825,6 +829,42 @@ function toggleTheme() {
 if (localStorage.getItem("nextSITheme") === "light") {
   document.body.classList.add("light-mode");
   document.getElementById("themeBtn").textContent = "🌙 Dark Mode";
+}
+function startVoiceInput() {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert("Voice Input is not supported. Please use Chrome.");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = "hi-IN";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  const voiceBtn = document.getElementById("voiceBtn");
+  const input = document.getElementById("question");
+
+  recognition.onstart = function () {
+    voiceBtn.textContent = "🔴 Listening...";
+  };
+
+  recognition.onresult = function (event) {
+    input.value = event.results[0][0].transcript;
+  };
+
+  recognition.onerror = function () {
+    alert("Microphone error. Please check microphone permission.");
+  };
+
+  recognition.onend = function () {
+    voiceBtn.textContent = "🎤";
+  };
+
+  recognition.start();
 }
 </script>
 </body>
