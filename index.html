@@ -652,6 +652,41 @@ function loadChatHistory() {
   activeChatId = chats[0].id;
   displayChat(chats[0]);
 }
+  // Next SI AI Memory System
+
+const MEMORY_KEY = "nextSIMemories";
+
+function getMemories() {
+  return JSON.parse(localStorage.getItem(MEMORY_KEY) || "[]");
+}
+
+function saveMemory(memory) {
+  const memories = getMemories();
+
+  if (!memory.trim()) return;
+
+  memories.push({
+    id: Date.now(),
+    text: memory.trim()
+  });
+
+  localStorage.setItem(MEMORY_KEY, JSON.stringify(memories));
+}
+
+function deleteMemory(id) {
+  const memories = getMemories().filter(
+    memory => memory.id !== id
+  );
+
+  localStorage.setItem(MEMORY_KEY, JSON.stringify(memories));
+}
+
+function clearMemories() {
+  if (confirm("क्या आप सभी Memories हटाना चाहते हैं?")) {
+    localStorage.removeItem(MEMORY_KEY);
+    alert("All memories deleted!");
+  }
+}
 async function sendMessage() {
   const input = document.getElementById("question");
   const text = input.value.trim();
