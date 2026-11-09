@@ -787,9 +787,33 @@ async function sendMessage() {
       throw new Error(JSON.stringify(data.details || data));
     }
 
-    thinking.remove();
+    const rawAnswer = data.answer || "";
 
-    addMessage("Next SI AI: " + data.answer, "bot");
+const suggestionMatch = rawAnswer.match(
+  /MEMORY_SUGGESTION:\s*(.+)/i
+);
+
+const cleanAnswer = rawAnswer.replace(
+  /^\s*MEMORY_SUGGESTION:.*$/im,
+  ""
+).trim();
+
+thinking.remove();
+
+addMessage("Next SI AI: " + cleanAnswer, "bot");
+
+// Ask permission to save memory
+if (suggestionMatch) {
+  const suggestedMemory = suggestionMatch[1].trim();
+
+  if (
+    suggestedMemory &&
+    confirm("🧠 क्या इस बात को Memory में सेव करना चाहते हैं?\n\n" + suggestedMemory)
+  ) {
+    saveMemory(suggestedMemory);
+    alert("✅ Memory Saved Successfully!");
+  }
+}
 
   } catch (error) {
     thinking.remove();
