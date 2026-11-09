@@ -556,8 +556,9 @@ function addMessage(text, type) {
   content.textContent = text;
   msg.appendChild(content);
 
-  // Copy Answer Button (only for AI messages)
   if (type === "bot") {
+
+    // Copy Button
     const copyBtn = document.createElement("button");
     copyBtn.textContent = "📋 Copy";
     copyBtn.className = "copy-btn";
@@ -575,6 +576,44 @@ function addMessage(text, type) {
     };
 
     msg.appendChild(copyBtn);
+
+    // Speak Button
+    const speakBtn = document.createElement("button");
+    speakBtn.textContent = "🔊 Speak";
+    speakBtn.className = "copy-btn";
+
+    speakBtn.onclick = function () {
+      if (!("speechSynthesis" in window)) {
+        alert("Voice output is not supported.");
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      const speech = new SpeechSynthesisUtterance(text);
+
+      speech.lang = /[\u0900-\u097F]/.test(text)
+        ? "hi-IN"
+        : "en-US";
+
+      speech.rate = 1;
+      speech.pitch = 1;
+
+      window.speechSynthesis.speak(speech);
+    };
+
+    msg.appendChild(speakBtn);
+
+    // Stop Voice Button
+    const stopBtn = document.createElement("button");
+    stopBtn.textContent = "⏹️ Stop";
+    stopBtn.className = "copy-btn";
+
+    stopBtn.onclick = function () {
+      window.speechSynthesis.cancel();
+    };
+
+    msg.appendChild(stopBtn);
   }
 
   box.appendChild(msg);
