@@ -356,14 +356,37 @@ function addMessage(text, type) {
   const msg = document.createElement("div");
 
   msg.className = "message " + type;
-  msg.textContent = text;
+
+  const content = document.createElement("span");
+  content.textContent = text;
+  msg.appendChild(content);
+
+  // Copy Answer Button (only for AI messages)
+  if (type === "bot") {
+    const copyBtn = document.createElement("button");
+    copyBtn.textContent = "📋 Copy";
+    copyBtn.className = "copy-btn";
+
+    copyBtn.onclick = async function () {
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "✅ Copied!";
+        setTimeout(() => {
+          copyBtn.textContent = "📋 Copy";
+        }, 2000);
+      } catch (error) {
+        copyBtn.textContent = "❌ Failed";
+      }
+    };
+
+    msg.appendChild(copyBtn);
+  }
 
   box.appendChild(msg);
   box.scrollTop = box.scrollHeight;
 
   saveChatHistory();
 }
-
 function displayChat(chat) {
   const box = document.getElementById("messages");
   box.innerHTML = "";
