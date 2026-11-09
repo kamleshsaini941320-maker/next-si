@@ -517,7 +517,7 @@ searchBox.addEventListener("input", function () {
 
   document.querySelectorAll(".history-item").forEach(item => {
     const title = item.querySelector("h3").textContent.toLowerCase();
-    const messages = item.textContent.toLowerCase();
+    const messages = item.dataset.search || "";
 
     item.style.display =
       title.includes(query) || messages.includes(query)
@@ -528,7 +528,10 @@ searchBox.addEventListener("input", function () {
   chats.forEach(chat => {
     const item = document.createElement("div");
     item.className = "history-item";
-
+item.dataset.search = [
+  chat.title,
+  ...(chat.messages || []).map(msg => msg.text)
+].join(" ").toLowerCase();
     const title = document.createElement("h3");
     title.textContent = chat.title || "New Chat";
 
