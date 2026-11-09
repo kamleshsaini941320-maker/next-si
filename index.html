@@ -511,19 +511,36 @@ function showHistory() {
     title.textContent = chat.title || "New Chat";
 
     const date = document.createElement("p");
-    date.textContent = chat.date || "";
+    date.textContent = new Date(chat.date).toLocaleString();
 
+    // Open Button
     const openBtn = document.createElement("button");
-    openBtn.textContent = "Open Chat";
+    openBtn.textContent = "Open Chat 💬";
     openBtn.onclick = () => openChat(chat.id);
 
+    // Rename Button
+    const renameBtn = document.createElement("button");
+    renameBtn.textContent = "Rename ✏️";
+
+    renameBtn.onclick = () => {
+      const newName = prompt("Enter new chat name:", chat.title);
+
+      if (newName && newName.trim()) {
+        chat.title = newName.trim().slice(0, 50);
+        saveAllChats();
+        showHistory();
+      }
+    };
+
+    // Delete Button
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
+    deleteBtn.textContent = "Delete 🗑️";
     deleteBtn.onclick = () => deleteChat(chat.id);
 
     item.appendChild(title);
     item.appendChild(date);
     item.appendChild(openBtn);
+    item.appendChild(renameBtn);
     item.appendChild(deleteBtn);
 
     box.appendChild(item);
