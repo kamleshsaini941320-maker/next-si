@@ -497,7 +497,17 @@ function showHistory() {
   const heading = document.createElement("h2");
   heading.textContent = "💬 Chat History";
   box.appendChild(heading);
+  // Search Chat History
+  const searchBox = document.createElement("input");
+  searchBox.type = "text";
+  searchBox.placeholder = "🔍 Search chats...";
+  searchBox.id = "chatSearch";
+  searchBox.style.width = "90%";
+  searchBox.style.padding = "12px";
+  searchBox.style.margin = "10px 0";
+  searchBox.style.borderRadius = "8px";
 
+  box.appendChild(searchBox);
   if (chats.length === 0) {
     box.append("No chat history found.");
     return;
