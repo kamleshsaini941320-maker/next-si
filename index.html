@@ -681,11 +681,66 @@ function deleteMemory(id) {
   localStorage.setItem(MEMORY_KEY, JSON.stringify(memories));
 }
 
+// Delete All Memories
 function clearMemories() {
   if (confirm("क्या आप सभी Memories हटाना चाहते हैं?")) {
     localStorage.removeItem(MEMORY_KEY);
     alert("All memories deleted!");
+    showMemories();
   }
+}
+
+// Save Memory manually
+function saveMemoryPrompt() {
+  const memory = prompt("क्या याद रखना है?");
+
+  if (memory && memory.trim()) {
+    saveMemory(memory);
+    alert("🧠 Memory saved successfully!");
+  }
+}
+
+// View Saved Memories
+function showMemories() {
+  const box = document.getElementById("messages");
+  box.innerHTML = "";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "🧠 My Memories";
+  box.appendChild(heading);
+
+  const memories = getMemories();
+
+  if (memories.length === 0) {
+    box.append("No memories saved yet.");
+    return;
+  }
+
+  memories.forEach(memory => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const text = document.createElement("p");
+    text.textContent = memory.text;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑️ Delete";
+
+    deleteBtn.onclick = () => {
+      deleteMemory(memory.id);
+      showMemories();
+    };
+
+    item.appendChild(text);
+    item.appendChild(deleteBtn);
+    box.appendChild(item);
+  });
+
+  const clearBtn = document.createElement("button");
+  clearBtn.textContent = "Delete All Memories 🗑️";
+  clearBtn.onclick = clearMemories;
+
+  box.appendChild(clearBtn);
 }
 async function sendMessage() {
   const input = document.getElementById("question");
