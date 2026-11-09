@@ -622,6 +622,22 @@ exportBtn.onclick = () => {
 }
 
 window.addEventListener("DOMContentLoaded", loadChatHistory);
+function toggleTheme() {
+  document.body.classList.toggle("light-mode");
+
+  const isLight = document.body.classList.contains("light-mode");
+
+  document.getElementById("themeBtn").textContent =
+    isLight ? "🌙 Dark Mode" : "☀️ Light Mode";
+
+  localStorage.setItem("nextSITheme", isLight ? "light" : "dark");
+}
+
+// Load saved theme
+if (localStorage.getItem("nextSITheme") === "light") {
+  document.body.classList.add("light-mode");
+  document.getElementById("themeBtn").textContent = "🌙 Dark Mode";
+}
 </script>
 </body>
 </html>
