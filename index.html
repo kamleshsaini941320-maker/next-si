@@ -259,6 +259,114 @@ body.light-mode .history-item {
 body.light-mode .history-item p {
   color: #555555;
 }
+/* Next SI Mobile Responsive Design */
+
+@media (max-width: 650px) {
+
+  header {
+    padding: 12px;
+  }
+
+  header h1 {
+    font-size: 25px;
+  }
+
+  header p {
+    font-size: 13px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .sidebar button {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 120px;
+    padding: 11px;
+    font-size: 13px;
+  }
+
+  .main {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .welcome {
+    padding: 17px;
+  }
+
+  .welcome h2 {
+    font-size: 21px;
+  }
+
+  .chatbox {
+    padding: 10px;
+  }
+
+  #messages {
+    height: 55vh;
+    min-height: 250px;
+    max-height: 450px;
+  }
+
+  .message {
+    max-width: 95%;
+    font-size: 14px;
+  }
+
+  .input-area {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .input-area input {
+    width: 100%;
+    padding: 11px;
+  }
+
+  .action {
+    padding: 11px;
+    white-space: nowrap;
+  }
+
+  .history-item button {
+    padding: 9px;
+    font-size: 12px;
+  }
+
+  #chatSearch {
+    width: 100% !important;
+  }
+}
+
+/* Tablet Design */
+
+@media (min-width: 651px) and (max-width: 900px) {
+  .sidebar {
+    width: 190px;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .sidebar button {
+    padding: 11px;
+  }
+}
 </style>
 </head>
 
