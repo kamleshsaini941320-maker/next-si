@@ -602,6 +602,57 @@ body.light-mode .bot {
 body.light-mode .user {
   color: #202123 !important;
 }
+/* Modern ChatGPT Input Bar */
+
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 750px;
+  margin: 20px auto;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 30px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+
+.input-area input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #202123;
+  font-size: 15px;
+}
+
+.input-area .action {
+  border-radius: 50%;
+  min-width: 42px;
+  height: 42px;
+  padding: 8px;
+  background: #2563eb;
+}
+
+.input-area .action:hover {
+  background: #174fc5;
+}
+
+@media (max-width: 600px) {
+  .input-area {
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .input-area input {
+    padding: 10px 6px;
+    font-size: 14px;
+  }
+}
 </style>
 </head>
 
