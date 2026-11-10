@@ -686,6 +686,47 @@ body.light-mode .user {
   color: #2563eb;
   border-color: #2563eb;
 }
+/* ChatGPT Message Layout */
+
+#messages {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.message {
+  width: fit-content;
+  max-width: 85%;
+  margin: 18px 0;
+  padding: 12px 17px;
+  line-height: 1.7;
+  box-sizing: border-box;
+}
+
+.message.bot {
+  margin-right: auto;
+  background: transparent;
+  color: #202123;
+  border: none;
+}
+
+.message.user {
+  margin-left: auto;
+  background: #f0f0f0;
+  color: #202123;
+  border-radius: 18px;
+}
+
+@media (max-width: 600px) {
+  #messages {
+    padding: 8px;
+  }
+
+  .message {
+    max-width: 92%;
+  }
+}
 </style>
 </head>
 
