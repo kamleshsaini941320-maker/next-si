@@ -905,7 +905,7 @@ function renderFormattedText(container, text) {
     const headingMatch = trimmed.match(/^#{1,3}\s+(.*)/);
 
     // Bullet पहचानना
-    const bulletMatch = trimmed.match(/^[*-]\s+(.*)/);
+   const bulletMatch = trimmed.match(/^\\?\*\s+(.*)/);
 
     // Numbering पहचानना
     const numberMatch = trimmed.match(/^(\d+)\.\s+(.*)/);
