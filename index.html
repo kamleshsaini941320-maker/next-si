@@ -970,12 +970,7 @@ function addMessage(text, type) {
   msg.className = "message " + type;
 
   const content = document.createElement("span");
-if (type === "bot") {
-  const label = document.createElement("div");
-  label.className = "ai-label";
-  label.textContent = "NSI AI";
-  msg.appendChild(label);
-}
+
   // AI के जवाब को Format करना
   if (type === "bot") {
     renderFormattedText(content, text);
