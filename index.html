@@ -746,7 +746,11 @@ body.light-mode .user {
 
   <p>Explore the Future of Artificial Intelligence.</p>
 
-<button class="start-btn" onclick="showDashboard()">
+<button class="start-btn"
+onclick="
+document.querySelector('.welcome-banner').style.display='none';
+document.getElementById('chatDashboard').style.display='flex';
+">
   Start Chatting 🚀
 </button>
 </section>
