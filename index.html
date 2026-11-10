@@ -727,6 +727,27 @@ body.light-mode .user {
     max-width: 92%;
   }
 }
+/* NSI AI Side Label */
+.message.bot {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ai-label {
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  padding-top: 4px;
+}
+
+.message.bot > span {
+  flex: 1 1 0;
+  flex-basis: 0;
+  min-width: 0;
+}
 </style>
 </head>
 
@@ -953,7 +974,12 @@ function addMessage(text, type) {
   msg.className = "message " + type;
 
   const content = document.createElement("span");
-
+if (type === "bot") {
+  const label = document.createElement("div");
+  label.className = "ai-label";
+  label.textContent = "NSI AI";
+  msg.appendChild(label);
+}
   // AI के जवाब को Format करना
   if (type === "bot") {
     renderFormattedText(content, text);
@@ -1201,7 +1227,7 @@ const cleanAnswer = rawAnswer.replace(
 
 thinking.remove();
 
-addMessage("Next SI AI: " + cleanAnswer, "bot");
+addMessage(cleanAnswer, "bot");
 
 // Ask permission to save memory
 if (suggestionMatch) {
