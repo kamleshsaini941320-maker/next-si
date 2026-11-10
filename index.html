@@ -733,6 +733,25 @@ body.light-mode .user {
   flex-basis: 0;
   min-width: 0;
 }
+/* AI Response Formatting */
+
+.message.bot h3 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 18px 0 10px;
+  color: #202123;
+}
+
+.message.bot p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 8px 0;
+}
+
+.message.bot strong {
+  font-weight: 700;
+  color: #111827;
+}
 </style>
 </head>
 
@@ -826,13 +845,8 @@ let chats = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 let activeChatId = null;
   // Dashboard खोलना
 function showDashboard() {
-  alert("Function Started!");
-
   document.querySelector(".welcome-banner").style.display = "none";
-
   document.getElementById("chatDashboard").style.display = "flex";
-
-  alert("Dashboard Open Command Sent!");
 }
 // Home पर वापस जाना
 function showHome() {
@@ -1450,25 +1464,6 @@ function startVoiceInput() {
   };
 
   recognition.start();
-}
-/* AI Response Formatting */
-
-.message.bot h3 {
-  font-size: 19px;
-  font-weight: 700;
-  margin: 18px 0 10px;
-  color: #202123;
-}
-
-.message.bot p {
-  font-size: 15px;
-  line-height: 1.8;
-  margin: 8px 0;
-}
-
-.message.bot strong {
-  font-weight: 700;
-  color: #111827;
 }
 </script>
 </body>
