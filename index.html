@@ -821,8 +821,21 @@ let chats = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 let activeChatId = null;
   // Dashboard खोलना
 function showDashboard() {
-  document.querySelector(".welcome-banner").style.display = "none";
-  document.getElementById("chatDashboard").style.display = "flex";
+  const banner = document.querySelector(".welcome-banner");
+  const dashboard = document.getElementById("chatDashboard");
+
+  if (!banner) {
+    alert("Welcome Banner नहीं मिला!");
+    return;
+  }
+
+  if (!dashboard) {
+    alert("Dashboard नहीं मिला!");
+    return;
+  }
+
+  banner.style.display = "none";
+  dashboard.style.display = "flex";
 }
 
 // Home पर वापस जाना
