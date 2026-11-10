@@ -927,6 +927,24 @@ body.sidebar-open .sidebar {
     z-index: 1001 !important;
   }
 }
+.sidebar-brand {
+  text-align: center;
+  padding: 15px 5px 20px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar-brand h2 {
+  color: white;
+  font-size: 23px;
+  margin: 0;
+}
+
+.sidebar-brand p {
+  color: #8dbaff;
+  font-size: 12px;
+  margin-top: 6px;
+}
 </style>
 </head>
 
@@ -954,6 +972,10 @@ document.getElementById('chatDashboard').style.display='flex';
   ☰
 </button>
 <aside class="sidebar">
+  <div class="sidebar-brand">
+  <h2>🚀 Next SI</h2>
+  <p>Your AI Workspace</p>
+</div>
   <button class="close-sidebar" onclick="toggleSidebar()">
   ✕ Close Menu
   </button>
