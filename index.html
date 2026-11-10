@@ -746,7 +746,7 @@ body.light-mode .user {
 
   <p>Explore the Future of Artificial Intelligence.</p>
 
- <button class="start-btn" onclick="alert('Button Working!'); showDashboard()">
+<button class="start-btn" onclick="showDashboard()">
   Start Chatting 🚀
 </button>
 </section>
@@ -821,23 +821,14 @@ let chats = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 let activeChatId = null;
   // Dashboard खोलना
 function showDashboard() {
-  const banner = document.querySelector(".welcome-banner");
-  const dashboard = document.getElementById("chatDashboard");
+  alert("Function Started!");
 
-  if (!banner) {
-    alert("Welcome Banner नहीं मिला!");
-    return;
-  }
+  document.querySelector(".welcome-banner").style.display = "none";
 
-  if (!dashboard) {
-    alert("Dashboard नहीं मिला!");
-    return;
-  }
+  document.getElementById("chatDashboard").style.display = "flex";
 
-  banner.style.display = "none";
-  dashboard.style.display = "flex";
+  alert("Dashboard Open Command Sent!");
 }
-
 // Home पर वापस जाना
 function showHome() {
   document.querySelector(".welcome-banner").style.display = "block";
