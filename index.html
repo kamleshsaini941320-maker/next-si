@@ -789,6 +789,19 @@ body.light-mode .user {
   font-weight: 700;
   color: #111827;
 }
+.sidebar-heading {
+  color: #8dbaff;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 22px 8px 12px;
+  letter-spacing: 1px;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 20px 5px;
+}
 </style>
 </head>
 
@@ -814,23 +827,46 @@ document.getElementById('chatDashboard').style.display='flex';
 <div class="container" id="chatDashboard" style="display: none;">
 
 <aside class="sidebar">
-  <button onclick="showHome()">🏠 Back to Home</button>
-  <button onclick="newChat()">🏠 New Chat</button>
-  <button onclick="showHistory()">🕘 Chat History</button>
-  <button onclick="quickAsk('Help me with coding')">💻 Coding Help</button>
-  <button onclick="quickAsk('Help me with Maths and Science')">🧮 Maths & Science</button>
-  <button onclick="quickAsk('Give me a business idea')">💡 Business Ideas</button>
-  <button onclick="quickAsk('Tell me about AI technology')">🤖 AI Technology</button>
-  <button onclick="toggleTheme()" id="themeBtn">
-  ☀️ Light Mode
-</button>
-  <button onclick="saveMemoryPrompt()">
-  🧠 Save Memory
-</button>
 
-<button onclick="showMemories()">
-  📚 View Memories
-</button>
+  <!-- System Controls -->
+  <h3 class="sidebar-heading">⚙️ System Controls</h3>
+
+  <button onclick="showHome()">🏠 Back to Home</button>
+
+  <button onclick="toggleTheme()" id="themeBtn">
+    ☀️ Light Mode
+  </button>
+
+  <button onclick="saveMemoryPrompt()">
+    🧠 Save Memory
+  </button>
+
+  <button onclick="showMemories()">
+    📚 View Memories
+  </button>
+
+  <div class="sidebar-divider"></div>
+
+  <!-- Chat Controls -->
+  <h3 class="sidebar-heading">💬 Chat Controls</h3>
+
+  <button onclick="newChat()">➕ New Chat</button>
+
+  <button onclick="showHistory()">🕘 Chat History</button>
+
+  <div class="sidebar-divider"></div>
+
+  <!-- Quick AI Tools -->
+  <h3 class="sidebar-heading">⚡ Quick AI Tools</h3>
+
+  <button onclick="quickAsk('Help me with coding')">💻 Coding Help</button>
+
+  <button onclick="quickAsk('Help me with Maths and Science')">🧮 Maths & Science</button>
+
+  <button onclick="quickAsk('Give me a business idea')">💡 Business Ideas</button>
+
+  <button onclick="quickAsk('Tell me about AI technology')">🤖 AI Technology</button>
+
 </aside>
 
 <main class="main">
