@@ -802,6 +802,42 @@ body.light-mode .user {
   background: rgba(255,255,255,0.15);
   margin: 20px 5px;
 }
+/* Sidebar Toggle */
+
+.menu-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+body.sidebar-open .sidebar {
+  transform: translateX(0);
+}
+
+.close-sidebar {
+  background: #dc2626 !important;
+  color: white !important;
+  margin-bottom: 20px !important;
+}
 </style>
 </head>
 
@@ -825,9 +861,13 @@ document.getElementById('chatDashboard').style.display='flex';
 </section>
 
 <div class="container" id="chatDashboard" style="display: none;">
-
+<button class="menu-toggle" onclick="toggleSidebar()">
+  ☰
+</button>
 <aside class="sidebar">
-
+  <button class="close-sidebar" onclick="toggleSidebar()">
+  ✕ Close Menu
+  </button>
   <!-- System Controls -->
   <h3 class="sidebar-heading">⚙️ System Controls</h3>
 
@@ -1536,6 +1576,9 @@ function startVoiceInput() {
   };
 
   recognition.start();
+}
+function toggleSidebar() {
+  document.body.classList.toggle("sidebar-open");
 }
 </script>
 </body>
