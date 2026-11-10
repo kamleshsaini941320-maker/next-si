@@ -891,7 +891,33 @@ function saveChatHistory() {
 
   saveAllChats();
 }
+function renderFormattedText(container, text) {
+  const lines = text.split("\n");
 
+  lines.forEach(line => {
+    const p = document.createElement("p");
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      container.appendChild(document.createElement("br"));
+      return;
+    }
+
+    const parts = trimmed.split(/(\*\*.*?\*\*)/g);
+
+    parts.forEach(part => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        const bold = document.createElement("strong");
+        bold.textContent = part.slice(2, -2);
+        p.appendChild(bold);
+      } else {
+        p.appendChild(document.createTextNode(part));
+      }
+    });
+
+    container.appendChild(p);
+  });
+}
 function addMessage(text, type) {
   const box = document.getElementById("messages");
   const msg = document.createElement("div");
@@ -899,7 +925,14 @@ function addMessage(text, type) {
   msg.className = "message " + type;
 
   const content = document.createElement("span");
-  content.textContent = text;
+
+  // AI के जवाब को Format करना
+  if (type === "bot") {
+    renderFormattedText(content, text);
+  } else {
+    content.textContent = text;
+  }
+
   msg.appendChild(content);
 
   if (type === "bot") {
@@ -913,6 +946,7 @@ function addMessage(text, type) {
       try {
         await navigator.clipboard.writeText(text);
         copyBtn.textContent = "✅ Copied!";
+
         setTimeout(() => {
           copyBtn.textContent = "📋 Copy";
         }, 2000);
