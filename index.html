@@ -1058,7 +1058,34 @@ body.sidebar-open .sidebar {
   .input-area .send-btn {
     order: 3;
   }
+}
+/* Professional SVG Action Buttons */
 
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 36px;
+  height: 36px;
+  margin: 8px 5px 0 0;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: rgba(120, 120, 120, 0.12);
+  color: #2563eb;
+}
+
+.copy-btn svg {
+  display: block;
+  flex-shrink: 0;
 }
 </style>
 </head>
@@ -1345,7 +1372,6 @@ function addMessage(text, type) {
 
   const content = document.createElement("span");
 
-  // AI के जवाब को Format करना
   if (type === "bot") {
     renderFormattedText(content, text);
   } else {
@@ -1358,19 +1384,29 @@ function addMessage(text, type) {
 
     // Copy Button
     const copyBtn = document.createElement("button");
-    copyBtn.textContent = "📋 Copy";
     copyBtn.className = "copy-btn";
+    copyBtn.title = "Copy";
+
+    const copyIcon = `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+        fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="8" width="13" height="13" rx="2"/>
+        <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+      </svg>`;
+
+    copyBtn.innerHTML = copyIcon;
 
     copyBtn.onclick = async function () {
       try {
         await navigator.clipboard.writeText(text);
-        copyBtn.textContent = "✅ Copied!";
+        copyBtn.textContent = "Copied!";
 
         setTimeout(() => {
-          copyBtn.textContent = "📋 Copy";
+          copyBtn.innerHTML = copyIcon;
         }, 2000);
       } catch (error) {
-        copyBtn.textContent = "❌ Failed";
+        copyBtn.textContent = "Failed";
       }
     };
 
@@ -1378,8 +1414,17 @@ function addMessage(text, type) {
 
     // Speak Button
     const speakBtn = document.createElement("button");
-    speakBtn.textContent = "🔊 Speak";
     speakBtn.className = "copy-btn";
+    speakBtn.title = "Speak";
+
+    speakBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+        fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 5 6 9H3v6h3l5 4z"/>
+        <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+        <path d="M19 5a10 10 0 0 1 0 14"/>
+      </svg>`;
 
     speakBtn.onclick = function () {
       if (!("speechSynthesis" in window)) {
@@ -1403,10 +1448,16 @@ function addMessage(text, type) {
 
     msg.appendChild(speakBtn);
 
-    // Stop Voice Button
+    // Stop Button
     const stopBtn = document.createElement("button");
-    stopBtn.textContent = "⏹️ Stop";
     stopBtn.className = "copy-btn";
+    stopBtn.title = "Stop Voice";
+
+    stopBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="19" height="19"
+        fill="currentColor">
+        <rect x="5" y="5" width="14" height="14" rx="2"/>
+      </svg>`;
 
     stopBtn.onclick = function () {
       window.speechSynthesis.cancel();
