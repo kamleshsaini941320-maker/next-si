@@ -1115,7 +1115,7 @@ body.sidebar-open .sidebar {
     overflow: hidden !important;
   }
 
-  #chatDashboard .chatbox {
+ #chatDashboard.chat-active {
     display: flex !important;
     flex-direction: column !important;
     flex: 1 !important;
@@ -1287,7 +1287,11 @@ let activeChatId = null;
   // Dashboard खोलना
 function showDashboard() {
   document.querySelector(".welcome-banner").style.display = "none";
-  document.getElementById("chatDashboard").style.display = "flex";
+
+  const dashboard = document.getElementById("chatDashboard");
+
+  dashboard.classList.add("chat-active");
+  dashboard.style.display = "flex";
 }
 // Home पर वापस जाना
 function showHome() {
