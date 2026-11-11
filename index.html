@@ -671,18 +671,6 @@ body.light-mode .user {
 .input-area .action:hover {
   background: #174fc5;
 }
-
-@media (max-width: 600px) {
-  .input-area {
-    gap: 5px;
-    padding: 6px;
-  }
-
-  .input-area input {
-    padding: 10px 6px;
-    font-size: 14px;
-  }
-}
 /* AI Message Action Buttons */
 
 .message.bot {
@@ -1009,6 +997,45 @@ body.sidebar-open .sidebar {
 
   #question:focus {
     outline: 2px solid #2563eb;
+  }
+}
+/* Mobile Input Bar Improvement */
+
+@media (max-width: 600px) {
+
+  .main {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 12px !important;
+    box-sizing: border-box;
+  }
+
+  .input-area {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 65px;
+    padding: 8px !important;
+    gap: 6px !important;
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  #question {
+    flex: 1 1 0% !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    height: 48px !important;
+    padding: 10px !important;
+    font-size: 16px !important;
+    color: #111827 !important;
+    background: white !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-area button {
+    flex: 0 0 auto !important;
+    white-space: nowrap;
+    padding: 12px 10px !important;
   }
 }
 </style>
