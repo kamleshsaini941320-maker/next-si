@@ -1087,6 +1087,65 @@ body.sidebar-open .sidebar {
   display: block;
   flex-shrink: 0;
 }
+/* Next SI Mobile Chat Full Screen */
+
+@media (max-width: 600px) {
+
+  #chatDashboard {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  #chatDashboard .main {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 65px 10px 10px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  #chatDashboard .chatbox {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+  }
+
+  #chatDashboard #messages {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+  }
+
+  #chatDashboard .message {
+    max-width: 95% !important;
+    box-sizing: border-box !important;
+  }
+
+  #chatDashboard .input-area {
+    flex-shrink: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+}
 </style>
 </head>
 
