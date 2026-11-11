@@ -1026,6 +1026,10 @@ body.sidebar-open .sidebar {
   justify-content: center;
   cursor: pointer;
 }
+.mic-btn.listening {
+  background: #fee2e2;
+  color: #dc2626;
+}
 </style>
 </head>
 
@@ -1772,12 +1776,26 @@ function startVoiceInput() {
   const voiceBtn = document.getElementById("voiceBtn");
   const input = document.getElementById("question");
 
+  const micIcon = `
+    <svg viewBox="0 0 24 24" width="22" height="22"
+      fill="none" stroke="currentColor" stroke-width="1.8"
+      stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="2" width="6" height="12" rx="3"/>
+      <path d="M5 10a7 7 0 0 0 14 0"/>
+      <path d="M12 17v5M9 22h6"/>
+    </svg>
+  `;
+
   recognition.onstart = function () {
-    voiceBtn.textContent = "🔴 Listening...";
+    voiceBtn.innerHTML = micIcon;
+    voiceBtn.classList.add("listening");
+    voiceBtn.title = "Listening...";
   };
 
   recognition.onresult = function (event) {
     input.value = event.results[0][0].transcript;
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 150) + "px";
   };
 
   recognition.onerror = function () {
@@ -1785,7 +1803,9 @@ function startVoiceInput() {
   };
 
   recognition.onend = function () {
-    voiceBtn.textContent = "🎤";
+    voiceBtn.innerHTML = micIcon;
+    voiceBtn.classList.remove("listening");
+    voiceBtn.title = "Voice Input";
   };
 
   recognition.start();
