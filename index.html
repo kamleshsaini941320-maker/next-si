@@ -1030,6 +1030,36 @@ body.sidebar-open .sidebar {
   background: #fee2e2;
   color: #dc2626;
 }
+/* Mobile ChatGPT Style Input Layout */
+
+@media (max-width: 600px) {
+
+  .input-area {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+
+  .input-area textarea {
+    order: 1;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-area .mic-btn {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .input-area .send-btn {
+    order: 3;
+  }
+
+}
 </style>
 </head>
 
