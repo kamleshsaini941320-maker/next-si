@@ -999,6 +999,33 @@ body.sidebar-open .sidebar {
     min-height: 42px;
   }
 }
+/* ChatGPT Style Mic Button */
+.mic-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ChatGPT Style Send Button */
+.send-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 </style>
 </head>
 
@@ -1085,8 +1112,9 @@ document.getElementById('chatDashboard').style.display='flex';
     Ask me anything in Hindi or English!
   </div>
 </div>
+<div class="input-area">
 
-<textarea
+  <textarea
     id="question"
     placeholder="Message Next SI..."
     rows="1"
@@ -1094,12 +1122,31 @@ document.getElementById('chatDashboard').style.display='flex';
     onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendMessage()}"
   ></textarea>
 
-  <button class="action" type="button" onclick="startVoiceInput()" id="voiceBtn">
-    🎤
+  <!-- Microphone Button -->
+  <button class="mic-btn" type="button"
+    onclick="startVoiceInput()" id="voiceBtn" title="Voice Input">
+
+    <svg viewBox="0 0 24 24" width="22" height="22"
+      fill="none" stroke="currentColor" stroke-width="1.8"
+      stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="2" width="6" height="12" rx="3"/>
+      <path d="M5 10a7 7 0 0 0 14 0"/>
+      <path d="M12 17v5M9 22h6"/>
+    </svg>
+
   </button>
 
-  <button class="action" type="button" onclick="sendMessage()">
-    ➤
+  <!-- Send Button -->
+  <button class="send-btn" type="button"
+    onclick="sendMessage()" title="Send Message">
+
+    <svg viewBox="0 0 24 24" width="21" height="21"
+      fill="none" stroke="currentColor" stroke-width="2.3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5"/>
+      <path d="m6 11 6-6 6 6"/>
+    </svg>
+
   </button>
 
 </div>
