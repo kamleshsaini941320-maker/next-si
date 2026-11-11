@@ -1052,18 +1052,15 @@ document.getElementById('chatDashboard').style.display='flex';
 </button>
 </section>
 
-<div class="container" id="chatDashboard" style="display: none;">
-<button class="menu-toggle" onclick="toggleSidebar()">
+<div class="container" id="chatDashboard" style="display: none;" onclick="closeSidebar()">
+<button class="menu-toggle" onclick="event.stopPropagation(); toggleSidebar()">
   ☰
 </button>
-<aside class="sidebar">
+<aside class="sidebar" onclick="event.stopPropagation()">
   <div class="sidebar-brand">
   <h2>🚀 Next SI</h2>
   <p>Your AI Workspace</p>
 </div>
-  <button class="close-sidebar" onclick="toggleSidebar()">
-  ✕ Close Menu
-  </button>
   <!-- System Controls -->
   <h3 class="sidebar-heading">⚙️ System Controls</h3>
 
@@ -1812,6 +1809,9 @@ function startVoiceInput() {
 }
 function toggleSidebar() {
   document.body.classList.toggle("sidebar-open");
+}
+function closeSidebar() {
+  document.body.classList.remove("sidebar-open");
 }
 </script>
 </body>
