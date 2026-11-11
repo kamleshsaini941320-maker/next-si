@@ -819,6 +819,34 @@ body.sidebar-open .sidebar {
   color: white !important;
   margin-bottom: 20px !important;
 }
+/* Desktop Input Bar Improvement */
+
+@media (min-width: 601px) {
+  .input-area {
+    width: 100%;
+    max-width: 850px;
+    min-height: 65px;
+    margin: 20px auto;
+    padding: 10px 15px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    box-sizing: border-box;
+  }
+
+  .input-area textarea {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    max-height: 150px;
+    padding: 13px 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    box-sizing: border-box;
+  }
+}
 /* Mobile Sidebar Fix */
 
 @media (max-width: 600px) {
