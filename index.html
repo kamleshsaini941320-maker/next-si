@@ -1160,7 +1160,80 @@ body.sidebar-open .sidebar {
     width: 100% !important;
     box-sizing: border-box !important;
   }
+}
+/* Professional Sidebar Chat History */
 
+.sidebar-new-chat {
+  width: 100%;
+  padding: 12px !important;
+  margin-bottom: 15px;
+  border: 1px solid #555 !important;
+  border-radius: 10px !important;
+  text-align: left;
+  font-weight: 600;
+}
+
+.sidebar-search {
+  margin: 10px 0;
+}
+
+.sidebar-search input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background: transparent;
+  color: inherit;
+  outline: none;
+}
+
+.sidebar-history-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.sidebar-chat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 9px;
+  margin: 4px 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar-chat-item:hover {
+  background: rgba(128, 128, 128, 0.18);
+}
+
+.sidebar-chat-item.active {
+  background: rgba(128, 128, 128, 0.28);
+}
+
+.sidebar-chat-open {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: none !important;
+  border: none !important;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-chat-actions {
+  display: flex;
+  gap: 3px;
+}
+
+.sidebar-chat-actions button {
+  padding: 5px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -1189,12 +1262,34 @@ document.getElementById('chatDashboard').style.display='flex';
   ☰
 </button>
 <aside class="sidebar" onclick="event.stopPropagation()">
+
   <div class="sidebar-brand">
-  <h2>🚀 Next SI</h2>
-  <p>Your AI Workspace</p>
-</div>
-  <!-- System Controls -->
-  <h3 class="sidebar-heading">⚙️ System Controls</h3>
+    <h2>🚀 Next SI</h2>
+    <p>Your AI Workspace</p>
+  </div>
+
+  <button class="sidebar-new-chat" onclick="newChat()">
+    ＋ New Chat
+  </button>
+
+  <h3 class="sidebar-heading">CHAT HISTORY</h3>
+
+  <div class="sidebar-search">
+    <input
+      type="text"
+      id="sidebarChatSearch"
+      placeholder="🔍 Search chats..."
+      oninput="filterSidebarChats()"
+    >
+  </div>
+
+  <div id="sidebarHistoryList" class="sidebar-history-list">
+    <!-- Chat History यहाँ दिखाई देगी -->
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <h3 class="sidebar-heading">⚙️ SYSTEM CONTROLS</h3>
 
   <button onclick="showHome()">🏠 Back to Home</button>
 
@@ -1202,35 +1297,29 @@ document.getElementById('chatDashboard').style.display='flex';
     ☀️ Light Mode
   </button>
 
-  <button onclick="saveMemoryPrompt()">
-    🧠 Save Memory
-  </button>
+  <button onclick="saveMemoryPrompt()">🧠 Save Memory</button>
 
-  <button onclick="showMemories()">
-    📚 View Memories
-  </button>
+  <button onclick="showMemories()">📚 View Memories</button>
 
   <div class="sidebar-divider"></div>
 
-  <!-- Chat Controls -->
-  <h3 class="sidebar-heading">💬 Chat Controls</h3>
+  <h3 class="sidebar-heading">⚡ QUICK AI TOOLS</h3>
 
-  <button onclick="newChat()">➕ New Chat</button>
+  <button onclick="quickAsk('Help me with coding')">
+    💻 Coding Help
+  </button>
 
-  <button onclick="showHistory()">🕘 Chat History</button>
+  <button onclick="quickAsk('Help me with Maths and Science')">
+    🧮 Maths & Science
+  </button>
 
-  <div class="sidebar-divider"></div>
+  <button onclick="quickAsk('Give me a business idea')">
+    💡 Business Ideas
+  </button>
 
-  <!-- Quick AI Tools -->
-  <h3 class="sidebar-heading">⚡ Quick AI Tools</h3>
-
-  <button onclick="quickAsk('Help me with coding')">💻 Coding Help</button>
-
-  <button onclick="quickAsk('Help me with Maths and Science')">🧮 Maths & Science</button>
-
-  <button onclick="quickAsk('Give me a business idea')">💡 Business Ideas</button>
-
-  <button onclick="quickAsk('Tell me about AI technology')">🤖 AI Technology</button>
+  <button onclick="quickAsk('Tell me about AI technology')">
+    🤖 AI Technology
+  </button>
 
 </aside>
 
@@ -1763,6 +1852,8 @@ function newChat() {
     "Hello! 👋 Welcome to Next SI AI. Ask me anything!",
     "bot"
   );
+
+  renderSidebarHistory();
 }
 
 function openChat(id) {
@@ -1772,6 +1863,8 @@ function openChat(id) {
 
   activeChatId = id;
   displayChat(chat);
+
+  renderSidebarHistory();
 }
 
 function deleteChat(id) {
@@ -1790,111 +1883,90 @@ function deleteChat(id) {
   }
 
   saveAllChats();
-  showHistory();
+  renderSidebarHistory();
 }
 
 function showHistory() {
-  const box = document.getElementById("messages");
-  box.innerHTML = "";
+  renderSidebarHistory();
+}
 
-  const heading = document.createElement("h2");
-  heading.textContent = "💬 Chat History";
-  box.appendChild(heading);
-  // Search Chat History
-  const searchBox = document.createElement("input");
-  searchBox.type = "text";
-  searchBox.placeholder = "🔍 Search chats...";
-  searchBox.id = "chatSearch";
-  searchBox.style.width = "90%";
-  searchBox.style.padding = "12px";
-  searchBox.style.margin = "10px 0";
-  searchBox.style.borderRadius = "8px";
+function renderSidebarHistory() {
+  const list = document.getElementById("sidebarHistoryList");
+  if (!list) return;
 
-  box.appendChild(searchBox);
-  if (chats.length === 0) {
-    box.append("No chat history found.");
+  list.innerHTML = "";
+
+  if (!chats || chats.length === 0) {
+    list.textContent = "No chats yet";
     return;
   }
-searchBox.addEventListener("input", function () {
-  const query = this.value.toLowerCase();
 
-  document.querySelectorAll(".history-item").forEach(item => {
-    const title = item.querySelector("h3").textContent.toLowerCase();
-    const messages = item.dataset.search || "";
-
-    item.style.display =
-      title.includes(query) || messages.includes(query)
-        ? "block"
-        : "none";
-  });
-});
-  chats.forEach(chat => {
+  chats.slice().reverse().forEach(chat => {
     const item = document.createElement("div");
-    item.className = "history-item";
-item.dataset.search = [
-  chat.title,
-  ...(chat.messages || []).map(msg => msg.text)
-].join(" ").toLowerCase();
-    const title = document.createElement("h3");
-    title.textContent = chat.title || "New Chat";
+    item.className = "sidebar-chat-item";
 
-    const date = document.createElement("p");
-    date.textContent = new Date(chat.date).toLocaleString();
+    if (chat.id === activeChatId) {
+      item.classList.add("active");
+    }
 
-    // Open Button
-    // Export Chat Button
-const exportBtn = document.createElement("button");
-exportBtn.textContent = "📥 Export Chat";
-
-exportBtn.onclick = () => {
-  const chatText = (chat.messages || [])
-    .map(msg => msg.text)
-    .join("\n\n");
-
-  const blob = new Blob([chatText], {
-    type: "text/plain;charset=utf-8"
-  });
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download = (chat.title || "Next-SI-Chat") + ".txt";
-
-  a.click();
-  URL.revokeObjectURL(url);
-};
     const openBtn = document.createElement("button");
-    openBtn.textContent = "Open Chat 💬";
+    openBtn.className = "sidebar-chat-open";
+    openBtn.textContent = chat.title || "New Chat";
     openBtn.onclick = () => openChat(chat.id);
 
-    // Rename Button
+    const actions = document.createElement("div");
+    actions.className = "sidebar-chat-actions";
+
     const renameBtn = document.createElement("button");
-    renameBtn.textContent = "Rename ✏️";
-
+    renameBtn.textContent = "✏️";
+    renameBtn.title = "Rename";
     renameBtn.onclick = () => {
-      const newName = prompt("Enter new chat name:", chat.title);
+      const name = prompt("Enter new chat name:", chat.title);
 
-      if (newName && newName.trim()) {
-        chat.title = newName.trim().slice(0, 50);
+      if (name && name.trim()) {
+        chat.title = name.trim().slice(0, 50);
         saveAllChats();
-        showHistory();
+        renderSidebarHistory();
       }
     };
 
-    // Delete Button
+    const exportBtn = document.createElement("button");
+    exportBtn.textContent = "📥";
+    exportBtn.title = "Export Chat";
+    exportBtn.onclick = () => {
+      const content = (chat.messages || [])
+        .map(msg => msg.text)
+        .join("\n\n");
+
+      const blob = new Blob([content], {
+        type: "text/plain;charset=utf-8"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = (chat.title || "Next-SI-Chat") + ".txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete 🗑️";
+    deleteBtn.textContent = "🗑️";
+    deleteBtn.title = "Delete";
     deleteBtn.onclick = () => deleteChat(chat.id);
 
-    item.appendChild(title);
-    item.appendChild(date);
-    item.appendChild(openBtn);
-    item.appendChild(exportBtn);
-    item.appendChild(renameBtn);
-    item.appendChild(deleteBtn);
+    actions.append(renameBtn, exportBtn, deleteBtn);
+    item.append(openBtn, actions);
+    list.appendChild(item);
+  });
+}
+function filterSidebarChats() {
+  const input = document.getElementById("sidebarChatSearch");
+  const query = input.value.toLowerCase();
 
-    box.appendChild(item);
+  document.querySelectorAll(".sidebar-chat-item").forEach(item => {
+    const title = item.querySelector(".sidebar-chat-open").textContent;
+    item.style.display = title.toLowerCase().includes(query) ? "flex" : "none";
   });
 }
 
