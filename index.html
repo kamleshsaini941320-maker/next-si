@@ -55,6 +55,26 @@ header p {
   display: flex;
   min-height: 85vh;
 }
+#chatDashboard.chat-active {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  height: 100vh !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+#chatDashboard.chat-active .main {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+#chatDashboard.chat-active .chatbox {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+}
 
 /* Premium Sidebar Design */
 
