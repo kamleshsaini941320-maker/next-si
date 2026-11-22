@@ -1421,6 +1421,39 @@ body:has(#chatDashboard.chat-active) {
   box-shadow: 0 8px 25px rgba(0,0,0,0.3);
   z-index: 9999;
 }
+.chat-dropdown-menu {
+  position: fixed;
+  left: 0;
+  right: auto;
+  top: 0;
+  width: 165px;
+  padding: 5px;
+  border: 1px solid rgba(128,128,128,0.25);
+  border-radius: 10px;
+  background: var(--sidebar-bg, #202020);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 9999;
+}
+
+/* Popup Animation */
+.chat-dropdown-menu {
+  transform-origin: top left;
+  animation: popupAppear 0.18s ease-out;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes popupAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 .chat-dropdown-menu button {
   display: flex;
