@@ -169,12 +169,19 @@ header p {
   padding-bottom: 12px;
 }
 
-#messages {
-  height: 350px;
-  overflow-y: auto;
+#chatDashboard #messages {
+  flex: 1 1 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
   padding: 10px;
+  box-sizing: border-box;
 }
 
+#chatDashboard .input-area {
+  flex: 0 0 auto !important;
+  margin-top: auto !important;
+}
 .message {
   white-space: pre-wrap;
   padding: 14px 18px;
