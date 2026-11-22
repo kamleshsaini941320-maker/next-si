@@ -1409,9 +1409,10 @@ body:has(#chatDashboard.chat-active) {
 }
 
 .chat-dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 35px;
+  position: fixed;
+ left: 0;
+ right: auto;
+ top: 0;
   width: 165px;
   padding: 5px;
   border: 1px solid rgba(128,128,128,0.25);
@@ -2471,7 +2472,15 @@ function renderSidebarHistory() {
       document.querySelectorAll(".chat-dropdown-menu").forEach(m => {
         m.style.display = "none";
       });
+    if (!isOpen) {
+      const rect = menuBtn.getBoundingClientRect();
 
+      menu.style.left = Math.min(
+        rect.right + 8,
+        window.innerWidth - 180
+      ) + "px";
+       menu.style.top = rect.top + "px";
+    }
       menu.style.display = isOpen ? "none" : "block";
     };
 
