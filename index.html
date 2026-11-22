@@ -1476,6 +1476,20 @@ body:has(#chatDashboard.chat-active) {
   flex: 0 0 auto !important;
   margin-top: 0 !important;
 }
+#chatDashboard .input-area textarea {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  resize: none !important;
+  scrollbar-width: none !important;
+  overflow-y: auto !important;
+}
+
+#chatDashboard .input-area textarea::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
 </style>
 </head>
 
