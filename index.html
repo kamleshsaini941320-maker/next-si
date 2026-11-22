@@ -1444,6 +1444,38 @@ body:has(#chatDashboard.chat-active) {
 .chat-dropdown-menu .chat-delete-option:hover {
   background: rgba(239,68,68,0.12) !important;
 }
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.chatbox {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 0 !important;
+  width: 100%;
+  height: 100%;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+#chatDashboard.chat-active #messages {
+  flex: 1 1 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+#chatDashboard.chat-active .input-area {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+}
 </style>
 </head>
 
