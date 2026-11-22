@@ -1135,6 +1135,16 @@ body.sidebar-open .sidebar {
     overflow: hidden !important;
     box-sizing: border-box !important;
 }
+body:has(#chatDashboard.chat-active) {
+    height: 100dvh !important;
+    overflow: hidden !important;
+}
+
+#chatDashboard.chat-active,
+#chatDashboard .main,
+#chatDashboard .chatbox {
+    max-height: 100dvh !important;
+}
 
 #chatDashboard .main {
     display: flex !important;
