@@ -1270,6 +1270,50 @@ body.sidebar-open .sidebar {
   max-height: 350px;
   overflow-y: auto;
 }
+/* Professional SVG Sidebar Icons */
+
+.sidebar button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar button svg {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  opacity: 0.85;
+  transition: 0.2s ease;
+}
+
+.sidebar button:hover svg {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.sidebar-brand h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.sidebar-new-chat {
+  justify-content: flex-start;
+}
+
+.sidebar-history-toggle {
+  justify-content: flex-start;
+}
+
+.sidebar-history-toggle span {
+  margin-left: auto;
+}
+
+.sidebar-heading {
+  letter-spacing: 1px;
+  font-size: 11px;
+  opacity: 0.65;
+}
 </style>
 </head>
 
@@ -2089,16 +2133,34 @@ function toggleTheme() {
 
   const isLight = document.body.classList.contains("light-mode");
 
-  document.getElementById("themeBtn").textContent =
-    isLight ? "🌙 Dark Mode" : "☀️ Light Mode";
+  const themeBtn = document.getElementById("themeBtn");
+
+  themeBtn.innerHTML = isLight
+    ? `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8">
+         <path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/>
+       </svg>
+       <span id="themeBtnText">Dark Mode</span>`
+    : `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8">
+         <circle cx="12" cy="12" r="4"/>
+         <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/>
+       </svg>
+       <span id="themeBtnText">Light Mode</span>`;
 
   localStorage.setItem("nextSITheme", isLight ? "light" : "dark");
 }
-
 // Load saved theme
-if (localStorage.getItem("nextSITheme") === "light") {
+const savedTheme = localStorage.getItem("nextSITheme");
+
+if (savedTheme === "light") {
   document.body.classList.add("light-mode");
-  document.getElementById("themeBtn").textContent = "🌙 Dark Mode";
+
+  document.getElementById("themeBtn").innerHTML = `
+    <svg viewBox="0 0 24 24" width="19" height="19"
+      fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/>
+    </svg>
+    <span id="themeBtnText">Dark Mode</span>
+  `;
 }
 function startVoiceInput() {
   const SpeechRecognition =
