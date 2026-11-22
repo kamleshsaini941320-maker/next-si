@@ -1577,6 +1577,43 @@ body:has(#chatDashboard.chat-active) {
   padding: 5px !important;
   opacity: 1 !important;
 }
+/* Fix: Chat title and three-dot button in one row */
+#sidebarHistoryList .sidebar-chat-item {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  gap: 5px !important;
+}
+
+#sidebarHistoryList .sidebar-chat-item > .sidebar-chat-open {
+  flex: 1 1 0 !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 8px !important;
+}
+
+#sidebarHistoryList .chat-menu-wrapper {
+  flex: 0 0 32px !important;
+  width: 32px !important;
+  min-width: 32px !important;
+  margin: 0 !important;
+}
+
+#sidebarHistoryList .chat-menu-wrapper .chat-menu-trigger {
+  display: flex !important;
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 5px !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
 </style>
 </head>
 
