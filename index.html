@@ -1124,9 +1124,9 @@ body.sidebar-open .sidebar {
 
 @media (max-width: 600px) {
 
- #chatDashboard.chat-active {
+#chatDashboard.chat-active {
     display: flex !important;
-    flex-direction: row !important;
+    flex-direction: column !important;
     width: 100% !important;
     height: 100dvh !important;
     min-height: 0 !important;
@@ -1136,10 +1136,10 @@ body.sidebar-open .sidebar {
     box-sizing: border-box !important;
 }
 
-  #chatDashboard .main {
+#chatDashboard .main {
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 1 100% !important;
+    flex: 1 1 0 !important;
     width: 100% !important;
     min-width: 0 !important;
     height: 100% !important;
@@ -1147,36 +1147,28 @@ body.sidebar-open .sidebar {
     padding: 65px 10px 10px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
-  }
+}
 
- #chatDashboard.chat-active {
+#chatDashboard .chatbox {
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 !important;
-    width: 100% !important;
+    flex: 1 1 0 !important;
     min-height: 0 !important;
-    min-width: 0 !important;
-  }
+    overflow: hidden !important;
+}
 
-  #chatDashboard #messages {
-    flex: 1 1 auto !important;
-    width: 100% !important;
+#chatDashboard #messages {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
     height: auto !important;
-    min-height: 0 !important;
-    box-sizing: border-box !important;
     overflow-y: auto !important;
-  }
+}
 
-  #chatDashboard .message {
-    max-width: 95% !important;
-    box-sizing: border-box !important;
-  }
-
-  #chatDashboard .input-area {
+#chatDashboard .input-area {
     flex-shrink: 0 !important;
     width: 100% !important;
+    margin-top: auto !important;
     box-sizing: border-box !important;
-  }
 }
 /* Professional Sidebar Chat History */
 
