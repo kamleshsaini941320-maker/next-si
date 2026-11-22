@@ -2475,10 +2475,10 @@ function renderSidebarHistory() {
     if (!isOpen) {
       const rect = menuBtn.getBoundingClientRect();
 
-      menu.style.left = Math.min(
-        rect.right + 8,
-        window.innerWidth - 180
-      ) + "px";
+    const sidebar = document.querySelector(".sidebar");
+    const sidebarRect = sidebar.getBoundingClientRect();
+
+    menu.style.left = (sidebarRect.right + 12) + "px";
        menu.style.top = rect.top + "px";
     }
       menu.style.display = isOpen ? "none" : "block";
