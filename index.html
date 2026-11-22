@@ -53,7 +53,10 @@ header p {
 
 .container {
   display: flex;
-  min-height: 85vh;
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 #chatDashboard.chat-active {
   display: flex !important;
