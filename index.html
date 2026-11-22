@@ -2463,28 +2463,44 @@ function renderSidebarHistory() {
     // Add Menu Options
     menu.append(renameBtn, exportBtn, deleteBtn);
 
-    // Toggle Dropdown
-    menuBtn.onclick = (event) => {
-      event.stopPropagation();
+   // Toggle Dropdown
+menuBtn.onclick = (event) => {
+  event.stopPropagation();
 
-      const isOpen = menu.style.display === "block";
+  const isOpen = menu.style.display === "block";
 
-      document.querySelectorAll(".chat-dropdown-menu").forEach(m => {
-        m.style.display = "none";
-      });
-    if (!isOpen) {
-      const rect = menuBtn.getBoundingClientRect();
+  document.querySelectorAll(".chat-dropdown-menu").forEach(m => {
+    m.style.display = "none";
+  });
 
-    const sidebar = document.querySelector(".sidebar");
-    const sidebarRect = sidebar.getBoundingClientRect();
+  if (isOpen) return;
 
-    menu.style.left = (sidebarRect.right + 12) + "px";
-       menu.style.top = rect.top + "px";
-    }
-      menu.style.display = isOpen ? "none" : "block";
-    };
+  // Move popup outside sidebar
+  document.body.appendChild(menu);
 
-    menu.onclick = event => event.stopPropagation();
+  menu.style.position = "fixed";
+  menu.style.display = "block";
+  menu.style.zIndex = "999999";
+
+  const rect = menuBtn.getBoundingClientRect();
+  const sidebar = document.querySelector(".sidebar");
+  const sidebarRect = sidebar.getBoundingClientRect();
+
+  const left = Math.min(
+    sidebarRect.right + 12,
+    window.innerWidth - menu.offsetWidth - 10
+  );
+
+  const top = Math.max(
+    10,
+    Math.min(rect.top, window.innerHeight - menu.offsetHeight - 10)
+  );
+
+  menu.style.left = left + "px";
+  menu.style.top = top + "px";
+};
+
+menu.onclick = event => event.stopPropagation();
 
     menuWrapper.append(menuBtn, menu);
 
