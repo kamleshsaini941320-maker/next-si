@@ -1235,6 +1235,41 @@ body.sidebar-open .sidebar {
   border: none !important;
   cursor: pointer;
 }
+/* ChatGPT Style History Button */
+
+.sidebar-history-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin: 8px 0;
+  background: transparent;
+  color: inherit;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 15px;
+  text-align: left;
+}
+
+.sidebar-history-toggle:hover {
+  background: rgba(128, 128, 128, 0.18);
+}
+
+#chatHistoryPanel {
+  padding-left: 5px;
+}
+
+#chatHistoryPanel .sidebar-search input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar-history-list {
+  max-height: 350px;
+  overflow-y: auto;
+}
 </style>
 </head>
 
@@ -1272,7 +1307,12 @@ document.getElementById('chatDashboard').style.display='flex';
     ＋ New Chat
   </button>
 
-  <h3 class="sidebar-heading">CHAT HISTORY</h3>
+ <button class="sidebar-history-toggle"
+        onclick="toggleChatHistory()">
+  🕘 Chat History
+  <span id="historyArrow">⌄</span>
+</button>
+ <div id="chatHistoryPanel" style="display: none;">
 
   <div class="sidebar-search">
     <input
@@ -1284,8 +1324,9 @@ document.getElementById('chatDashboard').style.display='flex';
   </div>
 
   <div id="sidebarHistoryList" class="sidebar-history-list">
-    <!-- Chat History यहाँ दिखाई देगी -->
   </div>
+
+</div>
 
   <div class="sidebar-divider"></div>
 
@@ -1853,6 +1894,9 @@ function newChat() {
     "bot"
   );
 
+  document.getElementById("chatHistoryPanel").style.display = "block";
+  document.getElementById("historyArrow").textContent = "⌃";
+
   renderSidebarHistory();
 }
 
@@ -1888,6 +1932,19 @@ function deleteChat(id) {
 
 function showHistory() {
   renderSidebarHistory();
+}
+function toggleChatHistory() {
+  const panel = document.getElementById("chatHistoryPanel");
+  const arrow = document.getElementById("historyArrow");
+
+  if (panel.style.display === "none") {
+    panel.style.display = "block";
+    arrow.textContent = "⌃";
+    renderSidebarHistory();
+  } else {
+    panel.style.display = "none";
+    arrow.textContent = "⌄";
+  }
 }
 
 function renderSidebarHistory() {
