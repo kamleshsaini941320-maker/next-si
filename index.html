@@ -1766,8 +1766,47 @@ body:has(#chatDashboard.chat-active) {
     </button>
 
   </div>
+</section>
+
+<!-- Next SI Contact Us Page -->
+<section class="about-page" id="contactPage" style="display:none;">
+
+  <div class="about-container">
+
+    <h1>Contact Us</h1>
+
+    <p>Have a question, suggestion, or problem? Contact us.</p>
+
+    <form onsubmit="sendContactMessage(event)">
+
+      <input type="text" id="contactName"
+        placeholder="Your Name" required>
+
+      <input type="email" id="contactEmail"
+        placeholder="Your Email" required>
+
+      <textarea id="contactMessage"
+        placeholder="Your Message" required></textarea>
+
+      <button type="submit">Send Message</button>
+
+    </form>
+
+    <p>
+      Email:
+      <a href="mailto:kamleshsaini941320@gmail.com">
+        kamleshsaini941320@gmail.com
+      </a>
+    </p>
+
+    <button class="about-back-btn" onclick="showHome()">
+      Back to Home
+    </button>
+
+  </div>
 
 </section>
+
 <div class="container" id="chatDashboard" style="display: none;" onclick="closeSidebar()">
 <button class="menu-toggle" onclick="event.stopPropagation(); toggleSidebar()">
   ☰
@@ -2784,6 +2823,32 @@ function toggleSidebar() {
 }
 function closeSidebar() {
   document.body.classList.remove("sidebar-open");
+}
+// तुम्हारे बाकी JavaScript functions
+// यहाँ नया sendContactMessage function जोड़ो
+
+function sendContactMessage(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("contactName").value.trim();
+  const email = document.getElementById("contactEmail").value.trim();
+  const message = document.getElementById("contactMessage").value.trim();
+
+  if (!name || !email || !message) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const subject = encodeURIComponent("Next SI Contact Form Message");
+  const body = encodeURIComponent(
+    "Name: " + name +
+    "\nEmail: " + email +
+    "\n\nMessage:\n" + message
+  );
+
+  window.location.href =
+    "mailto:kamleshsaini941320@gmail.com?subject=" +
+    subject + "&body=" + body;
 }
 </script>
 </body>
