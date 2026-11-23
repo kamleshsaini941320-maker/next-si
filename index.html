@@ -2952,7 +2952,7 @@ function closeSidebar() {
 // तुम्हारे बाकी JavaScript functions
 // यहाँ नया sendContactMessage function जोड़ो
 
-function sendContactMessage(event) {
+async function sendContactMessage(event) {
   event.preventDefault();
 
   const name = document.getElementById("contactName").value.trim();
@@ -2964,21 +2964,35 @@ function sendContactMessage(event) {
     return;
   }
 
-  const subject = encodeURIComponent("Next SI Contact Form Message");
+  try {
+    const response = await fetch(
+      "https://next-si-ai.kamleshsaini941320.workers.dev/contact",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message
+        })
+      }
+    );
 
-  const body = encodeURIComponent(
-    "Name: " + name +
-    "\nEmail: " + email +
-    "\n\nMessage:\n" + message
-  );
+    const result = await response.json();
 
-  const gmailURL =
-    "https://mail.google.com/mail/?view=cm&fs=1" +
-    "&to=kamleshsaini941320@gmail.com" +
-    "&su=" + subject +
-    "&body=" + body;
+    if (!response.ok || !result.success) {
+      alert(result.error || "Unable to send message. Please try again.");
+      return;
+    }
 
-  window.location.href = gmailURL;
+    alert("Your message has been sent successfully!");
+    event.target.reset();
+
+  } catch (error) {
+    alert("Something went wrong. Please try again later.");
+  }
 }
 </script>
 </body>
