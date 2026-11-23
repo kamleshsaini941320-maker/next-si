@@ -1649,6 +1649,52 @@ body:has(#chatDashboard.chat-active) {
   opacity: 1 !important;
   transform: none !important;
 }
+/* Next SI About Us Page */
+
+.about-page {
+  display: none;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #080f20;
+  color: white;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 30px;
+  background: #111d35;
+  border: 1px solid #168bff;
+  border-radius: 18px;
+  line-height: 1.8;
+}
+
+.about-container h1 {
+  color: #28baff;
+  text-align: center;
+}
+
+.about-container h2 {
+  color: #37c5ff;
+  margin-top: 25px;
+}
+
+.about-container p {
+  color: #d0d9e8;
+  font-size: 15px;
+}
+
+.about-back-btn {
+  display: block;
+  margin: 25px auto 0;
+  padding: 12px 25px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
 </style>
 </head>
 
@@ -1665,8 +1711,63 @@ body:has(#chatDashboard.chat-active) {
 <button class="start-btn" onclick="showDashboard()">
   Start Chatting 🚀
 </button>
+ <button class="start-btn" onclick="showAbout()">
+  About Us
+</button>
 </section>
+<!-- Next SI About Us Page -->
 
+<section class="about-page" id="aboutPage">
+
+  <div class="about-container">
+
+    <h1>About Next SI</h1>
+
+    <p>
+      Welcome to Next SI, an AI-powered digital platform
+      designed to make artificial intelligence easier
+      and more accessible.
+    </p>
+
+    <h2>Our Mission</h2>
+
+    <p>
+      Our mission is to provide a simple and useful
+      workspace where users can explore AI technology,
+      learn new things, improve their skills and get
+      help with everyday tasks.
+    </p>
+
+    <h2>What We Offer</h2>
+
+    <p>
+      Next SI provides AI-powered assistance for
+      conversations, coding, mathematics, science,
+      education and technology-related questions.
+    </p>
+
+    <h2>Our Vision</h2>
+
+    <p>
+      We aim to make modern AI technology easier to
+      understand and use through a simple and
+      user-friendly platform.
+    </p>
+
+    <h2>Contact</h2>
+
+    <p>
+      For questions, feedback or suggestions,
+      please use our Contact Us page.
+    </p>
+
+    <button class="about-back-btn" onclick="showHome()">
+      Back to Home
+    </button>
+
+  </div>
+
+</section>
 <div class="container" id="chatDashboard" style="display: none;" onclick="closeSidebar()">
 <button class="menu-toggle" onclick="event.stopPropagation(); toggleSidebar()">
   ☰
@@ -1855,8 +1956,15 @@ const STORAGE_KEY = "nextSIAllChats";
 
 let chats = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 let activeChatId = null;
+  // About Us Page खोलना
+function showAbout() {
+  document.querySelector(".welcome-banner").style.display = "none";
+  document.getElementById("chatDashboard").style.display = "none";
+  document.getElementById("aboutPage").style.display = "block";
+}
   // Dashboard खोलना
 function showDashboard() {
+  document.getElementById("aboutPage").style.display = "none";
   document.querySelector(".welcome-banner").style.display = "none";
 
   const dashboard = document.getElementById("chatDashboard");
@@ -1868,6 +1976,7 @@ function showDashboard() {
 function showHome() {
   document.querySelector(".welcome-banner").style.display = "block";
   document.getElementById("chatDashboard").style.display = "none";
+  document.getElementById("aboutPage").style.display = "none";
 }
 
 // पुराने Chat History को सुरक्षित रखना
