@@ -1695,6 +1695,104 @@ body:has(#chatDashboard.chat-active) {
   cursor: pointer;
   font-size: 15px;
 }
+/* Next SI Contact Form Design */
+
+#contactPage .about-container {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 30px;
+  background: #111d35;
+  border: 1px solid #168bff;
+  border-radius: 18px;
+  box-shadow: 0 0 20px rgba(22, 139, 255, 0.12);
+}
+
+#contactPage h1 {
+  color: #28baff;
+  text-align: center;
+  font-size: 30px;
+}
+
+#contactPage p {
+  color: #d0d9e8;
+  text-align: center;
+  line-height: 1.7;
+}
+
+#contactPage input,
+#contactPage textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: #0b1529;
+  color: #ffffff;
+  border: 1px solid #294568;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  font-family: inherit;
+  transition: 0.3s;
+}
+
+#contactPage input::placeholder,
+#contactPage textarea::placeholder {
+  color: #8fa6c4;
+  opacity: 1;
+}
+
+#contactPage input:focus,
+#contactPage textarea:focus {
+  border-color: #28baff;
+  box-shadow: 0 0 8px rgba(40, 186, 255, 0.25);
+}
+
+#contactPage textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+#contactPage button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  background: linear-gradient(135deg, #168bff, #2563eb);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#contactPage button[type="submit"]:hover {
+  box-shadow: 0 0 15px rgba(22, 139, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+#contactPage a {
+  color: #28baff;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+#contactPage a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  #contactPage .about-container {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  #contactPage h1 {
+    font-size: 25px;
+  }
+}
 </style>
 </head>
 
