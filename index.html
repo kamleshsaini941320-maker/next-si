@@ -1956,13 +1956,23 @@ const STORAGE_KEY = "nextSIAllChats";
 
 let chats = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 let activeChatId = null;
-  // About Us Page खोलना
+ // About Us Page खोलना
 function showAbout() {
+  const dashboard = document.getElementById("chatDashboard");
+
+  dashboard.classList.remove("chat-active");
+  dashboard.style.display = "none";
+
   document.querySelector(".welcome-banner").style.display = "none";
-  document.getElementById("chatDashboard").style.display = "none";
   document.getElementById("aboutPage").style.display = "block";
+
+  document.body.classList.remove("sidebar-open");
+
+  document.querySelectorAll(".chat-dropdown-menu").forEach(menu => {
+    menu.style.display = "none";
+  });
 }
-  // Dashboard खोलना
+// Dashboard खोलना
 function showDashboard() {
   document.getElementById("aboutPage").style.display = "none";
   document.querySelector(".welcome-banner").style.display = "none";
@@ -1974,9 +1984,19 @@ function showDashboard() {
 }
 // Home पर वापस जाना
 function showHome() {
+  const dashboard = document.getElementById("chatDashboard");
+
+  dashboard.classList.remove("chat-active");
+  dashboard.style.display = "none";
+
   document.querySelector(".welcome-banner").style.display = "block";
-  document.getElementById("chatDashboard").style.display = "none";
   document.getElementById("aboutPage").style.display = "none";
+
+  document.body.classList.remove("sidebar-open");
+
+  document.querySelectorAll(".chat-dropdown-menu").forEach(menu => {
+    menu.style.display = "none";
+  });
 }
 
 // पुराने Chat History को सुरक्षित रखना
